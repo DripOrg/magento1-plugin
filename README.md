@@ -20,6 +20,7 @@ Módulo de Integração de Pix Parcelado para o e-commerce Magento 1.x
 8. Vá até `Vendas > Métodos de Pagamento`
 ![img_2.png](img/system-payment-method.png)
 9. Encontre o método `Drip - Pix Parcelado`
+![img.png](img/drip-config.png)
 10. Deixe a opção `Enabled` como `Yes/Sim`
 11. Selecione o modo pertencente a sua chave (`Developer` ou `Production`)
 12. Adicione a sua chave no campo `Api Key`
