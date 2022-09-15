@@ -1,0 +1,40 @@
+<?php
+
+/**
+ *
+ * @category   Drip
+ * @package    Drip_Pix
+ * @author     Inovarti <https://www.inovarti.com.br>
+ * @copyright 2022 Drip (https://usedrip.com.br/)
+ */
+?>
+<?php $status     = Mage::getSingleton('usedrip/source_status'); ?>
+<p><?php echo $this->escapeHtml($this->__($this->getMethod()->getTitle())) ?></p>
+<?php $_order = $this->getInfo()->getOrder(); ?>
+<?php $_info = $this->getInfo(); ?>
+<?php if ((null !== $_info->getAdditionalInformation('id'))) : ?>
+    <p><?php echo $this->__('Ckeckout Id (Drip): %s', $_info->getAdditionalInformation('id')); ?></p>
+<?php endif; ?>
+<?php if ((null !== $_info->getAdditionalInformation('id'))) : ?>
+    <p><?php echo $this->__('Order Id (Drip): %s', $_info->getAdditionalInformation('orderId')); ?></p>
+<?php endif; ?>
+<?php if ((null !== $_info->getCcStatus())) : ?>
+    <p><?php echo $this->__('Payment Status: %s', $status->getOptionText($_info->getCcStatus())); ?></p>
+<?php endif; ?>
+<?php if ((null !== $_info->getCcStatus())) : ?>
+    <p><?php echo $this->__('Payment Status Detail: %s', $_info->getCcStatus()); ?></p>
+<?php endif; ?>
+<?php if ((null !== $_info->getAdditionalInformation('expiresAt'))) : ?>
+    <p><?php echo $this->__('Expired: %s', Mage::app()->getLocale()->date( $_info->getAdditionalInformation('expiresAt'), Zend_Date::ISO_8601, null, false)); ?></p>
+<?php endif; ?>
+<?php
+$dataExpiracao = Mage::app()->getLocale()->date($_order->getPayment()->getAdditionalInformation('expiresAt'), Zend_Date::ISO_8601, null, false);
+$dataAtual = Mage::app()->getLocale()->date(time());
+?>
+<?php if (!$dataAtual->isLater($dataExpiracao)): ?>
+    <?php if($this->getPixUrl() && $_order->getStatus() == "pending"): ?>
+        <p>
+        <a href="<?php echo $this->getPixUrl(); ?>" target="_blank"><?php echo $this->__("Clique aqui para parcelar"); ?></a>
+    </p>
+    <?php endif; ?>
+<?php endif;?>

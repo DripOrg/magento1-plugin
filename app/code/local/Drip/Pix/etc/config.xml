@@ -1,0 +1,112 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ *
+ * @category   Drip
+ * @package    Drip_Pix
+ * @author     Inovarti <https://www.inovarti.com.br>
+ * @copyright 2022 Drip (https://usedrip.com.br/)
+ */
+-->
+<config>
+    <modules>
+        <Drip_Pix>
+            <version>0.1.1</version>
+        </Drip_Pix>
+    </modules>
+    <global>
+        <blocks>
+            <usedrip>
+                <class>Drip_Pix_Block</class>
+            </usedrip>
+        </blocks>
+        <helpers>
+            <usedrip>
+                <class>Drip_Pix_Helper</class>
+            </usedrip>
+        </helpers>
+        <models>
+            <usedrip>
+                <class>Drip_Pix_Model</class>
+                <resourceModel>usedrip_resource</resourceModel>
+            </usedrip>
+        </models>
+    </global>
+    <frontend>
+        <routers>
+            <usedrip>
+                <use>standard</use>
+                <args>
+                    <module>Drip_Pix</module>
+                    <frontName>usedrip</frontName>
+                </args>
+            </usedrip>
+        </routers>
+        <translate>
+            <modules>
+                <usedrip>
+                    <files>
+                        <default>Drip_Pix.csv</default>
+                    </files>
+                </usedrip>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <usedrip>
+                    <file>usedrip.xml</file>
+                </usedrip>
+            </updates>
+        </layout>
+    </frontend>
+    <adminhtml>
+        <translate>
+            <modules>
+                <usedrip>
+                    <files>
+                        <default>Drip_Pix.csv</default>
+                    </files>
+                </usedrip>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <usedrip>
+                    <file>usedrip.xml</file>
+                </usedrip>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Drip_Pix after="Mage_Adminhtml">Drip_Pix_Adminhtml</Drip_Pix>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <default>
+        <payment>
+            <usedrip_pix>
+                <active>0</active>
+                <model>usedrip/method_pix</model>
+                <title translate="label">Pix parcelado em 3x</title>
+                <instructions><![CDATA[]]></instructions>
+                <allowspecific>0</allowspecific>
+                <order_status>pending</order_status>
+                <payment_action>order</payment_action>
+            </usedrip_pix>
+        </payment>
+    </default>
+    <crontab>
+        <jobs>
+            <usedrip_pix_expirado_orders>
+                <schedule><cron_expr>30 */1 * * *</cron_expr></schedule>
+                <run><model>usedrip/observer::verificaPixVencidos</model></run>
+            </usedrip_pix_expirado_orders>
+        </jobs>
+    </crontab>
+</config>

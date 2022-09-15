@@ -1,0 +1,43 @@
+<?php
+/**
+ *
+ * @category   Drip
+ * @package    Drip_Pix
+ * @author     Inovarti <https://www.inovarti.com.br>
+ * @copyright 2022 Drip (https://usedrip.com.br/)
+ */
+?>
+<p><?php echo $this->escapeHtml($this->__($this->getMethod()->getTitle())) ?></p>
+<?php $_order = $this->getInfo()->getOrder(); ?>
+<?php $_info = $this->getInfo(); ?>
+<?php if($_info->getAdditionalInformation()): ?>
+    <?php
+    $dataExpiracao = Mage::app()->getLocale()->date($_order->getPayment()->getAdditionalInformation('expiresAt'), Zend_Date::ISO_8601, null, false);
+    $dataAtual = Mage::app()->getLocale()->date(time());
+    ?>
+    <?php if (!$dataAtual->isLater($dataExpiracao)): ?>
+        <?php if($this->getPixUrl() && $_order->getStatus() == "pending"): ?>
+            <p><a href="<?php echo $this->getPixUrl(); ?>" class="button" target="_blank"><?php echo $this->__("Clique aqui para parcelar"); ?></a></p>
+            <?php if ($this->getMethod()->getInstructions()): ?>
+            <table>
+                <tbody>
+                    <tr>
+                        <td><?php echo nl2br($this->getMethod()->getInstructions()) ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endif;?>
+<?php else:?>
+    <?php if ($this->getInstructions()): ?>
+    <table>
+        <tbody>
+            <tr>
+                <td><?php echo nl2br($this->getInstructions()) ?></td>
+            </tr>
+        </tbody>
+    </table>
+    <?php endif ?>
+<?php endif;?>
+
